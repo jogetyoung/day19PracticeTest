@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            margin-top: 10px;
+        }
+        td {
+            padding: 10px;
+            vertical-align: top;
+        }
+        input[type="text"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Add a New Task</h1>
+
+<form method="POST" action="/add" data-th-object="${todo}">
+    <input type="hidden" name="id" data-th-value="${todo_id}">
+    <table>
+        <tbody>
+        <tr>
+            <td>Id</td>
+            <td data-th-text="${todo_id}"></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>
+                <input type="text" data-th-field="*{name}" required>
+                <ul data-th-if="${#fields.hasErrors('name')}">
+                    <li data-th-each="err : ${#fields.errors('name')}" data-th-text="${err}" class="error"></li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>
+                <textarea data-th-field="*{description}" rows="5" cols="50" required></textarea>
+                <ul data-th-if="${#fields.hasErrors('description')}">
+                    <li data-th-each="err : ${#fields.errors('description')}" data-th-text="${err}" class="error"></li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Due Date</td>
+            <td>
+                <input type="date" data-th-field="*{dueDate}" required>
+                <ul data-th-if="${#fields.hasErrors('dueDate')}">
+                    <li data-th-each="err : ${#fields.errors('dueDate')}" data-th-text="${err}" class="error"></li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Priority</td>
+            <td>
+                <select data-th-field="*{priority}" required>
+                    <option value="">Select Priority</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>
+                <select data-th-field="*{status}" required>
+                    <option value="">Select Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="started">Started</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <button type="submit">Add Task</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<div class="button-container">
+    <form method="GET" action="/listing">
+        <button type="submit">View Listings</button>
+    </form>
+</div>
+
+</body>
+</html>
