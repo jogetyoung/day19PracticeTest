@@ -33,6 +33,7 @@ ARG WORK_DIR=/app
 WORKDIR ${WORK_DIR}
 
 COPY --from=builder /compiledir/target/Practice-Test-0.0.1-SNAPSHOT.jar Practice-Test-2.0.jar
+COPY src/main/resources/static/todos.txt /app/todos.txt
 
 ENV SERVER_PORT=3000
 
